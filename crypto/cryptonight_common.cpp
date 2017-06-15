@@ -39,7 +39,7 @@ extern "C"
 #include <malloc.h>
 #endif // __GNUC__
 
-#if defined(__APPLE__)
+#if defined(__APPLE__) || defined(__FreeBSD__) || !defined(_GNU_SOURCE) || !defined(__GLIBC__)
 #include <mach/vm_statistics.h>
 #endif
 
@@ -143,7 +143,7 @@ cryptonight_ctx* cryptonight_alloc_ctx(size_t use_fast_mem, size_t use_mlock, al
 	}
 #else
 
-#if defined(__APPLE__)
+#if defined(__APPLE__) || defined(__FreeBSD__) || !defined(_GNU_SOURCE) || !defined(__GLIBC__)
 	ptr->long_state  = (uint8_t*)mmap(0, MEMORY, PROT_READ | PROT_WRITE,
 		MAP_PRIVATE | MAP_ANON, VM_FLAGS_SUPERPAGE_SIZE_2MB, 0);
 #else
